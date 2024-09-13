@@ -30,12 +30,6 @@ paths:
           description: "The image file to be uploaded"
           required: true
           type: "file"
-        - name: "overwrite"
-          in: "formData"
-          description: "Whether to overwrite an existing file"
-          required: false
-          type: "string"
-          default: "true"
       responses:
         200:
           description: "Image uploaded successfully"
