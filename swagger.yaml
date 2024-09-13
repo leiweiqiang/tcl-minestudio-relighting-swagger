@@ -1,24 +1,18 @@
 ---
 swagger: "2.0"
 info:
-  description: "This API converts EXR files to PNG and provides an image upload functionality."
+  description: "This API allows image uploads and EXR to PNG conversions with greenscreen removal."
   version: "1.0.0"
   title: "EXR to PNG Conversion and Image Upload API"
-  termsOfService: "http://example.com/terms/"
-  contact:
-    email: "support@example.com"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "relighting-comfyui.tcl-research.us"
 basePath: "/api"
+schemes:
+  - "https"
 tags:
   - name: "Image Upload"
     description: "APIs for uploading images"
   - name: "EXR to PNG"
     description: "APIs for converting EXR files to PNG format"
-schemes:
-  - "https"
 paths:
   /nuke/upload:
     post:
@@ -26,17 +20,22 @@ paths:
         - "Image Upload"
       summary: "Upload an image"
       description: "Upload an image file using multipart/form-data."
-      operationId: "uploadImage"
       consumes:
         - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - name: "file"
+        - name: "image"  # Updated field name to "image"
           in: "formData"
           description: "The image file to be uploaded"
           required: true
           type: "file"
+        - name: "overwrite"
+          in: "formData"
+          description: "Whether to overwrite an existing file"
+          required: false
+          type: "string"
+          default: "true"
       responses:
         200:
           description: "Image uploaded successfully"
