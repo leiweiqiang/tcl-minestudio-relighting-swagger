@@ -25,7 +25,7 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "image"  # Updated field name to "image"
+        - name: "image"
           in: "formData"
           description: "The image file to be uploaded"
           required: true
@@ -42,14 +42,19 @@ paths:
           schema:
             type: "object"
             properties:
-              message:
-                type: "string"
-              filename:
+              name:
                 type: "string"
                 description: "The name of the uploaded file"
+              subfolder:
+                type: "string"
+                description: "The subfolder where the file is stored (if any)"
+              type:
+                type: "string"
+                description: "The type of file (input/output)"
             example:
-              message: "Image successfully uploaded"
-              filename: "uploaded_image.png"
+              name: "sample.1015.exr"
+              subfolder: ""
+              type: "input"
         400:
           description: "No file uploaded"
           schema:
