@@ -1,9 +1,8 @@
----
 swagger: "2.0"
 info:
-  description: "This API allows image uploads and EXR to PNG conversions with greenscreen removal."
+  description: "This API allows image uploads, EXR to PNG conversions with greenscreen removal, and other image processing operations."
   version: "1.0.0"
-  title: "EXR to PNG Conversion and Image Upload API"
+  title: "EXR to PNG Conversion and Image Processing API"
 host: "relighting-comfyui.tcl-research.us"
 basePath: "/api"
 schemes:
@@ -13,6 +12,8 @@ tags:
     description: "APIs for uploading images"
   - name: "EXR to PNG"
     description: "APIs for converting EXR files to PNG format"
+  - name: "Image Processing"
+    description: "APIs for various image processing operations"
 paths:
   /nuke/upload:
     post:
@@ -52,21 +53,11 @@ paths:
         400:
           description: "No file uploaded"
           schema:
-            type: "object"
-            properties:
-              error:
-                type: "string"
-            example:
-              error: "No file uploaded"
+            $ref: "#/definitions/ErrorResponse"
         500:
           description: "Internal server error"
           schema:
-            type: "object"
-            properties:
-              error:
-                type: "string"
-            example:
-              error: "An error occurred: error details"
+            $ref: "#/definitions/ErrorResponse"
 
   /nuke/ext2png:
     post:
@@ -87,76 +78,162 @@ paths:
           schema:
             type: "array"
             items:
-              type: "object"
-              properties:
-                filename:
-                  type: "string"
-                  description: "Path to the EXR file"
-                subfolder:
-                  type: "string"
-                  description: "Subfolder for organizing output (can be empty)"
-                type:
-                  type: "string"
-                  description: "Type of the file (input or output)"
-              required:
-                - filename
-            example:
-              - filename: "sample.1015.exr"
-                subfolder: ""
-                type: "input"
-              - filename: "sample.1014.exr"
-                subfolder: ""
-                type: "input"
-              - filename: "sample.1013.exr"
-                subfolder: ""
-                type: "input"
+              $ref: "#/definitions/EXRFileInfo"
       responses:
         200:
           description: "A list of alpha PNG paths resulting from the greenscreen removal"
           schema:
             type: "array"
             items:
-              type: "object"
-              properties:
-                filename:
-                  type: "string"
-                  description: "The PNG file generated from the EXR file"
-                subfolder:
-                  type: "string"
-                  description: "The subfolder where the PNG file is stored"
-                type:
-                  type: "string"
-                  description: "The type of the file (output)"
-            example:
-              - filename: "sample.1015.png"
-                subfolder: "png_b794ab2dbe8b479498d345a668e7dfa1"
-                type: "output"
-              - filename: "sample.1014.png"
-                subfolder: "png_b794ab2dbe8b479498d345a668e7dfa1"
-                type: "output"
-              - filename: "sample.1013.png"
-                subfolder: "png_b794ab2dbe8b479498d345a668e7dfa1"
-                type: "output"
+              $ref: "#/definitions/PNGFileInfo"
         400:
           description: "Invalid input, such as missing fields or wrong data format"
           schema:
-            type: "object"
-            properties:
-              error:
-                type: "string"
-            example:
-              error: "Invalid input, expecting a list of objects"
+            $ref: "#/definitions/ErrorResponse"
         500:
           description: "Internal server error"
           schema:
-            type: "object"
+            $ref: "#/definitions/ErrorResponse"
+
+  /nuke/{prompt_id}:
+    get:
+      tags:
+        - "Image Processing"
+      summary: "Get history for a specific prompt"
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
             properties:
-              error:
-                type: "string"
-            example:
-              error: "An error occurred: error details"
+              status:
+                type: string
+              text:
+                type: string
+
+  /nuke/download:
+    get:
+      tags:
+        - "Image Processing"
+      summary: "Download an image file"
+      parameters:
+        - in: query
+          name: filename
+          required: true
+          type: string
+        - in: query
+          name: type
+          type: string
+        - in: query
+          name: subfolder
+          type: string
+      responses:
+        '200':
+          description: File downloaded successfully
+          schema:
+            type: file
+        '400':
+          description: Bad request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        '403':
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        '404':
+          description: File not found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /nuke/async_ext2png:
+    post:
+      tags:
+        - "EXR to PNG"
+      summary: "Convert EXR to PNG asynchronously"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "JSON array containing EXR file information"
+          required: true
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EXRFileInfo"
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              prompt_id:
+                type: string
+              number:
+                type: number
+              node_errors:
+                type: array
+        '400':
+          description: Bad request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        '500':
+          description: Internal server error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
+  EXRFileInfo:
+    type: "object"
+    properties:
+      filename:
+        type: "string"
+        description: "Path to the EXR file"
+      subfolder:
+        type: "string"
+        description: "Subfolder for organizing output (can be empty)"
+      type:
+        type: "string"
+        description: "Type of the file (input or output)"
+    required:
+      - filename
+    example:
+      filename: "sample.1015.exr"
+      subfolder: ""
+      type: "input"
+
+  PNGFileInfo:
+    type: "object"
+    properties:
+      filename:
+        type: "string"
+        description: "The PNG file generated from the EXR file"
+      subfolder:
+        type: "string"
+        description: "The subfolder where the PNG file is stored"
+      type:
+        type: "string"
+        description: "The type of the file (output)"
+    example:
+      filename: "sample.1015.png"
+      subfolder: "png_b794ab2dbe8b479498d345a668e7dfa1"
+      type: "output"
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+    example:
+      error: "An error occurred: error details"
+
   ApiResponse:
     type: "object"
     properties:
