@@ -14,7 +14,7 @@ paths:
   /api/nuke/upload:
     post:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Upload an image"
       description: "Upload an image file using multipart/form-data."
       consumes:
@@ -58,7 +58,7 @@ paths:
   /api/nuke/ext2png:
     post:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Convert EXR files to PNG"
       description: "This endpoint processes EXR files, removes greenscreens, and converts them to PNG format."
       operationId: "convertEXRToPNG"
@@ -94,7 +94,7 @@ paths:
   /api/nuke/{prompt_id}:
     get:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Get task status"
       parameters:
         - in: path
@@ -115,7 +115,7 @@ paths:
   /api/nuke/download:
     get:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Download results"
       parameters:
         - in: query
@@ -149,7 +149,7 @@ paths:
   /api/nuke/async_ext2png:
     post:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Convert EXR to PNG asynchronously"
       consumes:
         - "application/json"
@@ -188,7 +188,7 @@ paths:
   /api/nuke/version:
     get:
       tags:
-        - name: "Relighting Workflow APIs"
+        - "Relighting Workflow APIs"
       summary: "Get API version information"
       description: "This endpoint returns the current version of the API"
       produces:
