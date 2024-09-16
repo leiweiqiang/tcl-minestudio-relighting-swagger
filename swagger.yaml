@@ -9,7 +9,7 @@ schemes:
   - "https"
 tags:
   - name: "Relighting Workflow APIs"
-    description: "APIs for relighting workflow, including image uploads, EXR to PNG conversions, and other image processing operations"
+    description: ""
 paths:
   /api/nuke/upload:
     post:
