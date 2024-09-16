@@ -9,16 +9,12 @@ schemes:
   - "https"
 tags:
   - name: "Relighting Workflow APIs"
-    description: "APIs for uploading images"
-  - name: "EXR to PNG"
-    description: "APIs for converting EXR files to PNG format"
-  - name: "Image Processing"
-    description: "APIs for various image processing operations"
+    description: "APIs for relighting workflow, including image uploads, EXR to PNG conversions, and other image processing operations"
 paths:
   /api/nuke/upload:
     post:
       tags:
-        - "Image Upload"
+        - name: "Relighting Workflow APIs"
       summary: "Upload an image"
       description: "Upload an image file using multipart/form-data."
       consumes:
@@ -79,52 +75,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/EXRFileInfo"
-          example:
-            - filename: "sample.1001.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1002.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1003.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1004.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1005.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1006.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1007.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1008.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1009.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1010.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1011.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1012.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1013.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1014.exr"
-              subfolder: ""
-              type: "input"
-            - filename: "sample.1015.exr"
-              subfolder: ""
-              type: "input"
       responses:
         200:
           description: "A list of alpha PNG paths resulting from the greenscreen removal"
@@ -230,6 +180,35 @@ paths:
           description: Bad request
           schema:
             $ref: "#/definitions/ErrorResponse"
+        '500':
+          description: Internal server error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /api/nuke/version:
+    get:
+      tags:
+        - name: "Relighting Workflow APIs"
+      summary: "Get API version information"
+      description: "This endpoint returns the current version of the API"
+      produces:
+        - "application/json"
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              version:
+                type: string
+                description: "The current version of the API"
+              release_date:
+                type: string
+                format: date
+                description: "The release date of the current version"
+            example:
+              version: "1.0.0"
+              release_date: "2024-09-16"
         '500':
           description: Internal server error
           schema:
