@@ -63,6 +63,24 @@ paths:
           description: "The image file to be uploaded"
           required: true
           type: "file"
+          - name: "fx"
+          in: "query"
+          description: "Focal length in x-direction"
+          required: false
+          type: "number"
+          format: "float"
+        - name: "fy"
+          in: "query"
+          description: "Focal length in y-direction"
+          required: false
+          type: "number"
+          format: "float"
+        - name: "resolution"
+          in: "query"
+          description: "Resolution of the output normal map"
+          required: false
+          type: "integer"
+          format: "int32"  
       responses:
         200:
           description: "Normal map generated successfully"
