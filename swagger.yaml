@@ -11,10 +11,10 @@ tags:
   - name: "Relighting Workflow APIs"
     description: ""
 paths:
-  /image2depth:
+  /depth_map:
     post:
       tags:
-        - "Image to Depth API"
+        - "Depth & Normal Map APIs"
       summary: "Upload an image"
       description: "Upload an image file using multipart/form-data."
       consumes:
@@ -54,7 +54,51 @@ paths:
           description: "Internal server error"
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+
+  /normal_map:
+    post:
+      tags:
+        - "Depth & Normal Map APIs"
+      summary: "Upload an image"
+      description: "Upload an image file using multipart/form-data."
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "image"
+          in: "formData"
+          description: "The image file to be uploaded"
+          required: true
+          type: "file"
+      responses:
+        200:
+          description: "Image uploaded successfully"
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "The name of the uploaded file"
+              subfolder:
+                type: "string"
+                description: "The subfolder where the file is stored (if any)"
+              type:
+                type: "string"
+                description: "The type of file (input/output)"
+            example:
+              name: "sample.1015.exr"
+              subfolder: ""
+              type: "input"
+        400:
+          description: "No file uploaded"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /nuke/upload:
     post:
       tags:
