@@ -67,20 +67,23 @@ paths:
           in: "query"
           description: "Focal length in x-direction"
           required: false
-          type: "number"
-          format: "float"
+          type: "integer"
+          format: "int32"
+          default: 1000
         - name: "fy"
           in: "query"
           description: "Focal length in y-direction"
           required: false
-          type: "number"
-          format: "float"
+          type: "integer"
+          format: "int32"
+          default: 1000
         - name: "resolution"
           in: "query"
           description: "Resolution of the output normal map"
           required: false
           type: "integer"
-          format: "int32"  
+          format: "int32" 
+          default: 1024 
       responses:
         200:
           description: "Normal map generated successfully"
