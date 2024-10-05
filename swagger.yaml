@@ -11,7 +11,7 @@ tags:
   - name: "Relighting Workflow APIs"
     description: ""
 paths:
-  /api/image2depth:
+  /image2depth:
     post:
       tags:
         - "Image to Depth API"
@@ -55,7 +55,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /api/nuke/upload:
+  /nuke/upload:
     post:
       tags:
         - "Relighting Workflow APIs"
@@ -99,7 +99,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/nuke/ext2png:
+  /nuke/ext2png:
     post:
       tags:
         - "Relighting Workflow APIs"
@@ -137,7 +137,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/nuke/{prompt_id}:
+  /nuke/{prompt_id}:
     get:
       tags:
         - "Relighting Workflow APIs"
@@ -158,7 +158,7 @@ paths:
               text:
                 type: string
 
-  /api/nuke/download:
+  /nuke/download:
     get:
       tags:
         - "Relighting Workflow APIs"
@@ -192,7 +192,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/nuke/async_ext2png:
+  /nuke/async_ext2png:
     post:
       tags:
         - "Relighting Workflow APIs"
@@ -233,7 +233,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/nuke/version:
+  /nuke/version:
     get:
       tags:
         - "Relighting Workflow APIs"
