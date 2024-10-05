@@ -11,7 +11,7 @@ tags:
   - name: "Relighting Workflow APIs"
     description: ""
 paths:
-/api/image2depth:
+  /api/image2depth:
     post:
       tags:
         - "Image to Depth API"
