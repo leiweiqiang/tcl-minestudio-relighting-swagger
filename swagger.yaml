@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "This API allows image uploads, EXR to PNG conversions with greenscreen removal, and other image processing operations."
   version: "1.0.0"
-  title: "EXR to PNG Conversion and Image Processing API"
+  title: "Minestudio API"
 host: "relighting-comfyui.tcl-research.us"
 basePath: "/api"
 schemes:
@@ -11,6 +11,50 @@ tags:
   - name: "Relighting Workflow APIs"
     description: ""
 paths:
+/api/image2depth:
+    post:
+      tags:
+        - "Image to Depth API"
+      summary: "Upload an image"
+      description: "Upload an image file using multipart/form-data."
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "image"
+          in: "formData"
+          description: "The image file to be uploaded"
+          required: true
+          type: "file"
+      responses:
+        200:
+          description: "Image uploaded successfully"
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "The name of the uploaded file"
+              subfolder:
+                type: "string"
+                description: "The subfolder where the file is stored (if any)"
+              type:
+                type: "string"
+                description: "The type of file (input/output)"
+            example:
+              name: "sample.1015.exr"
+              subfolder: ""
+              type: "input"
+        400:
+          description: "No file uploaded"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
   /api/nuke/upload:
     post:
       tags:
