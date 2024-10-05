@@ -29,23 +29,15 @@ paths:
           type: "file"
       responses:
         200:
-          description: "Image uploaded successfully"
+          description: "Depth map generated successfully"
           schema:
             type: "object"
             properties:
-              name:
+              result:
                 type: "string"
-                description: "The name of the uploaded file"
-              subfolder:
-                type: "string"
-                description: "The subfolder where the file is stored (if any)"
-              type:
-                type: "string"
-                description: "The type of file (input/output)"
+                description: "The result of depth map generation"
             example:
-              name: "sample.1015.exr"
-              subfolder: ""
-              type: "input"
+              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01365_.png&type=output&subfolder="
         400:
           description: "No file uploaded"
           schema:
@@ -73,23 +65,15 @@ paths:
           type: "file"
       responses:
         200:
-          description: "Image uploaded successfully"
+          description: "Normal map generated successfully"
           schema:
             type: "object"
             properties:
-              name:
+              result:
                 type: "string"
-                description: "The name of the uploaded file"
-              subfolder:
-                type: "string"
-                description: "The subfolder where the file is stored (if any)"
-              type:
-                type: "string"
-                description: "The type of file (input/output)"
+                description: "The result of normal map generation"
             example:
-              name: "sample.1015.exr"
-              subfolder: ""
-              type: "input"
+              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01365_.png&type=output&subfolder="
         400:
           description: "No file uploaded"
           schema:
