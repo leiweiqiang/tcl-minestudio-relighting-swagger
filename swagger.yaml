@@ -63,7 +63,7 @@ paths:
           description: "The image file to be uploaded"
           required: true
           type: "file"
-          - name: "fx"
+        - name: "fx"
           in: "query"
           description: "Focal length in x-direction"
           required: false
