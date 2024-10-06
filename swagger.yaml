@@ -16,7 +16,7 @@ paths:
       tags:
         - "Depth & Normal Map APIs"
       summary: "Upload an image"
-      description: "Upload an image file using multipart/form-data."
+      description: "Upload an image file using multipart/form-data"
       consumes:
         - "multipart/form-data"
       produces:
@@ -37,7 +37,7 @@ paths:
                 type: "string"
                 description: "The result of depth map generation"
             example:
-              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01365_.png&type=output&subfolder="
+              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01368_.png&type=output"
         400:
           description: "No file uploaded"
           schema:
@@ -94,7 +94,7 @@ paths:
                 type: "string"
                 description: "The result of normal map generation"
             example:
-              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01365_.png&type=output&subfolder="
+              result: "https://relighting-comfyui.tcl-research.us/view?filename=ComfyUI_01370_.png&type=output"
         400:
           description: "No file uploaded"
           schema:
